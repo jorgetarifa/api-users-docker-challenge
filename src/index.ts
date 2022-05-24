@@ -47,9 +47,12 @@ connectToDatabase()
         app.use(morgan('dev'))
         app.use(cors())
         app.use(express.json())
-        // app.use('/', (req,res) => {
-        //     res.sendFile(`${__dirname}/statics/views/welcome.html`)
-        // })
+       
+        
+        app.use('/', (req,res) => {
+        res.sendFile(`${__dirname}/statics/views/welcome.html`)
+        })
+            
         app.use( '/users', decodeToken, userRouter )
         app.use( '/auth', authRouter )
         
