@@ -37,9 +37,7 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-app.use(express.static(`${__dirname}/statics`))
 
-const data_Token = process.env.DATA_FIREBASE_TOKEN
 
 connectToDatabase()
     .then(() => {
@@ -47,17 +45,15 @@ connectToDatabase()
         app.use(morgan('dev'))
         app.use(cors())
         app.use(express.json())
-       
+        app.use(express.static(`${__dirname}/statics`))
         
-        app.use('/', (req,res) => {
+        app.get('/', (req,res) => {
         res.sendFile(`${__dirname}/statics/views/welcome.html`)
-        })
+         })
             
         app.use( '/users', decodeToken, userRouter )
         app.use( '/auth', authRouter )
-        
-        
-        
+               
 
         // start the Express server
         app.listen(PORT, () => {

@@ -6,7 +6,6 @@ import usersSchema from '../schemas-joi/users.schema'
 import { validator } from '../utilities/joiValidator'
 import {
     
-   
     rootRoute,
     listUsersById, 
     postUsersRoute,
@@ -19,12 +18,7 @@ export const userRouter = express.Router()
 
 
 
-
-
 //Routes
-
-
-
 userRouter.get( "/", rootRoute )
 
 userRouter.get( "/:id", listUsersById )
