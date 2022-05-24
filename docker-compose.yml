@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  api:
+    container_name: api-users
+    restart: always
+    build: .
+    ports:
+      - "4000:8080"  
+    links:
+      - mongo
+    # volumes:
+    #   - .:/app
+
+  mongo:
+    container_name: mongo-db
+    image: mongo
+    ports:
+      - "27022:27017"
