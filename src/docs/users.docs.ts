@@ -71,7 +71,7 @@
  * /users:
  *  post:
  *      summary: Create a new user
- *      tags: [Countries]
+ *      tags: [Users]
  *      security:
  *          - BearerAuth: []
  *      requestBody:
