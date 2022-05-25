@@ -1,9 +1,7 @@
-import express, { Request, Response } from "express";
-import { collections } from "../services/data.service"
-import { ObjectId } from "mongodb"
-import { createValidator } from "express-joi-validation"
+import express from "express";
 import usersSchema from '../schemas-joi/users.schema'
 import { validator } from '../utilities/joiValidator'
+import { decodeToken } from "../firebase/handleToken";
 import {
     
     rootRoute,
@@ -19,7 +17,7 @@ export const userRouter = express.Router()
 
 
 //Routes
-userRouter.get( "/", rootRoute )
+userRouter.get( "/", decodeToken,  rootRoute )
 
 userRouter.get( "/:id", listUsersById )
 

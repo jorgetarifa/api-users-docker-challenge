@@ -1,21 +1,19 @@
 import express from "express"
 import morgan from "morgan"
-import cors from "cors"
 import * as dotenv from "dotenv"
+dotenv.config()
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
-//import { ContainerTypes, ExpressJoiError } from 'express-joi-validation'
 import { connectToDatabase } from "./services/data.service"
 import { userRouter } from "./routes/users.routes" 
 import { authRouter } from "./routes/auth.routes" 
-import { decodeToken } from "./firebase/handleToken";
+
 
 const app = express()
 const PORT = process.env.PORT || 7100 // default port to listen
 
 
 //Swagger
-//Documentation
 const swaggerOptions = {
     definition: {
         openapi: '3.0.0',
@@ -43,22 +41,32 @@ connectToDatabase()
     .then(() => {
         // send all calls to /users to our usersRouter
         app.use(morgan('dev'))
-        app.use(cors())
         app.use(express.json())
         app.use(express.static(`${__dirname}/statics`))
         
         app.get('/', (req,res) => {
         res.sendFile(`${__dirname}/statics/views/welcome.html`)
          })
-            
-        app.use( '/users', decodeToken, userRouter )
-        app.use( '/auth', authRouter )
-               
+
+        app.get('/info', (req,res) => {
+            res.json({
+                login : "http://localhost:8000/auth/login",
+                createUser : "http://localhost:8000/auth/createUser",
+                getUsers : "http://localhost:8000/users",
+                getUsersPerId: "http://localhost:8000/users/:id",
+                postUser:  "[Method: POST]  http://localhost:8000/users/",
+                editUserPerId:  "[Method: PUT] http://localhost:8000/users/:id",
+                deleteUserPerId: "[Method: DELETE] http://localhost:8000/users/:id"
+            })
+        })
+          
+        app.use( '/users', userRouter )
+        app.use( '/auth',  authRouter )        
+                      
 
         // start the Express server
-        app.listen(PORT, () => {
-            console.log(`Server started at http://localhost:${PORT} `)
-        })
+        app.listen( PORT, () => console.log( `Server started at http://localhost:${PORT}` )
+        )
     })
     .catch((error: Error) => {
         console.error("Database connection failed", error)

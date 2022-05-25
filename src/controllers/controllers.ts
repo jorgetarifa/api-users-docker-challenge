@@ -1,20 +1,10 @@
 import { ObjectId } from "mongodb"
-import express, { Request, Response } from "express"
+import { Request, Response } from "express"
 import { collections } from "../services/data.service"
 
 
 // const mainRoute = `${__dirname.replace('controllers','statics/views')}`
 
-
-
-// export const loginRoute = (_req: Request, res: Response) => {
-//     res.sendFile(`${mainRoute}/index.html`)
-// }
-
-
-// export const registerRoute = (_req: Request, res: Response) => {
-//     res.sendFile(`${mainRoute}/register.html`)
-// }
 
 
 export const listUsersById = async (req: Request, res: Response) => {
