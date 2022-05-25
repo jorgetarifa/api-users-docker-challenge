@@ -47,18 +47,11 @@ connectToDatabase()
         app.get('/', (req,res) => {
         res.sendFile(`${__dirname}/statics/views/welcome.html`)
          })
-
-        app.get('/info', (req,res) => {
-            res.json({
-                login : "http://localhost:8000/auth/login",
-                createUser : "http://localhost:8000/auth/createUser",
-                getUsers : "http://localhost:8000/users",
-                getUsersPerId: "http://localhost:8000/users/:id",
-                postUser:  "[Method: POST]  http://localhost:8000/users/",
-                editUserPerId:  "[Method: PUT] http://localhost:8000/users/:id",
-                deleteUserPerId: "[Method: DELETE] http://localhost:8000/users/:id"
-            })
-        })
+       
+         app.get('/login', (req,res) => {
+            res.sendFile(`${__dirname}/statics/views/index.html`)
+             })
+           
           
         app.use( '/users', userRouter )
         app.use( '/auth',  authRouter )        
